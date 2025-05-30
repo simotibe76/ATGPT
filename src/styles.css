@@ -1,0 +1,449 @@
+/* Stile generale */
+.app {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #041633;
+}
+
+/* Layout della schermata di gioco */
+.page-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+/* Tabellone dei premi */
+.prizes-board {
+  width: 200px;
+  text-align: center;
+}
+
+.prizes-board h3 {
+  margin-bottom: 10px;
+}
+
+.prizes-board ul {
+  list-style: none;
+  padding: 0;
+}
+
+.prizes-board ul li {
+  padding: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+/* Premi bassi (colonna sinistra, sfondo blu) */
+.low-values ul li {
+  background-color: #0000ff;
+  color: white;
+}
+
+/* Premi alti (colonna destra, sfondo rosso) */
+.high-values ul li {
+  background-color: red;
+  color: white;
+}
+
+/* Zona centrale: blocco regioni */
+.region-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 650px;
+}
+
+/* Stile per un singolo pacco (RegionBox) */
+.region-box {
+  width: 110px;
+  height: 110px;
+  border: 2px solid white;
+  border-radius: 10px;
+  background-color: #030f71;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+
+.region-box p {
+  margin: 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.region-box.opened {
+  background-color: green;
+  transform: scale(1.1);
+}
+
+.region-box.opened p {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Effetto hover sui pacchi */
+.region-box:hover {
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Stile per il pacco del giocatore */
+.your-box {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.your-box .box {
+  width: 100px;
+  height: 100px;
+  border: 2px solid white;
+  background-color: orange;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 100px;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+/* Animazione di entrata */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Pulsanti chiamata */
+.call-buttons {
+  margin-top: 20px;
+}
+
+.call-buttons button {
+  font-size: 18px;
+  padding: 12px 20px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 50px;
+  width: 140px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* Effetto hover sui pulsanti */
+.call-buttons .accept:hover,
+.call-buttons .decline:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Pulsante Accetta (verde) */
+.call-buttons .accept {
+  background: #28a745;
+  color: white;
+}
+
+.call-buttons .decline {
+  background: #dc3545;
+  color: white;
+}
+
+.call-buttons .accept:hover {
+  background: #218838;
+}
+
+.call-buttons .decline:hover {
+  background: #c82333;
+}
+.carousel {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.box {
+  background-color: #0078d7;
+  color:black;
+  font-size: 20px;
+  font-weight: bold;
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 3px solid #fff;
+}
+
+.box.highlight {
+  transform: scale(1.2);
+  background-color: #ffcc00;
+}
+
+.box.selected {
+  transform: scale(1.2);
+  background-color: #28a745;
+}
+/* Uniformiamo il colore dello sfondo */
+body {
+  background-color: #041633; /* Sfondo blu uniforme */
+  color: white;
+}
+
+/* Contenitore principale del carosello */
+.carousel-container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Carosello: i pacchi */
+.carousel {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Pacco */
+.box {
+  background-color: #0078d7;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #fff;
+}
+
+/* Pacco evidenziato */
+.box.highlight {
+  transform: scale(1.2);
+  background-color: #ffcc00;
+}
+
+/* Pacco selezionato */
+.box.selected {
+  transform: scale(1.3);
+  background-color: #28a745;
+}
+
+/* Pulsante "Prendi" */
+.take-button {
+  font-size: 18px;
+  padding: 12px 20px;
+  margin-top: 15px;
+  cursor: pointer;
+  border-radius: 50px;
+  background-color: #ffcc00;
+  color: black;
+  font-weight: bold;
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.take-button:hover {
+  transform: scale(1.1);
+  background-color: #ffc107;
+}
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, auto);
+  gap: 15px;
+  justify-items: center;
+  padding: 20px;
+}
+
+/* Premio rivelato */
+.prize-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: yellow;
+}
+.doctor-offer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.doctor-offer-box {
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  padding: 25px;
+  width: 360px;
+  max-width: 90%;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #333; /* Testo scuro per contrastare lo sfondo chiaro */
+}
+
+.doctor-offer-box h2,
+.doctor-offer-box p {
+  color: #333;
+}
+.doctor-offer-header p {
+  font-size: 22px;
+  font-weight: bold;
+  color: yellow; /* 💛 Testo super visibile */
+  text-shadow: 2px 2px 5px black; /* 🔥 Effetto contrastante */
+}
+.start-button {
+  font-size: 20px; /* 🔥 Testo più grande */
+  padding: 20px 20x; /* 🔥 Maggiore spazio interno */
+  width: 200x; /* 🔥 Larghezza aumentata */
+  height: 50x; /* 🔥 Altezza aumentata */
+  border-radius: 15px; /* 🔥 Angoli arrotondati */
+  background-color: #ffcc00; /* 🎨 Colore più vivace */
+  color: black; /* 🔥 Testo ben leggibile */
+  font-weight: bold; /* 🔥 Testo più marcato */
+  border: double;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Effetto hover per migliorare l'esperienza utente */
+.start-button:hover {
+  transform: scale(1.1); /* 🔥 Espansione quando si passa sopra */
+  background-color: #ffc107;
+}
+
+
+/* Animazione dell'overlay */
+@keyframes fadeInBackground {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animazione del box */
+@keyframes popUpBox {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Testo */
+.doctor-call-box h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Overlay della chiamata del Dottore stile Skype */
+.doctor-call-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0b1a2b, #1e3c72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInBackground 1s ease-in-out;
+  z-index: 1000;
+}
+
+/* Box della chiamata */
+.doctor-call-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 2px solid white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  animation: popUpBox 0.6s ease;
+  max-width: 90%;
+  width: 300px;
+}
+
+/* Animazione dell'overlay */
+@keyframes fadeInBackground {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animazione del box */
+@keyframes popUpBox {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Testo */
+.doctor-call-box h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Pulsante */
+.doctor-call-box button {
+  background-color: gold;
+  color: black;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.doctor-call-box button:hover {
+  background-color: orange;
+}
+
+
+

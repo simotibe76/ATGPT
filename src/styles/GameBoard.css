@@ -1,0 +1,185 @@
+/* ✅ Container principale */
+.game-board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: white;
+}
+
+/* 🎯 Banner pacco del giocatore */
+.player-info-banner {
+  background-color: #041633;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid white;
+}
+
+/* 💶 Colonne valori */
+.value-columns {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 20px;
+}
+
+/* 📦 Valori premio laterali */
+.value-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.value-box {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  width: 120px;
+  transition: opacity 0.6s ease, transform 0.4s ease;
+}
+
+.value-box.low {
+  background: linear-gradient(to bottom, #66ccff, #0066cc);
+  border: 2px solid #004c99;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.value-box.high {
+  background: linear-gradient(to bottom, #ff6666, #cc0000);
+  border: 2px solid #990000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 🗑️ Premio eliminato */
+.value-box.eliminated {
+  opacity: 0;
+  transform: scale(0.8);
+  text-decoration: line-through;
+}
+
+/* 🎁 Griglia pacchi centrali */
+.remaining-boxes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+/* 🟦 Box pacco regione */
+.region-box {
+  width: 100px; /* imposta la larghezza fissa */
+  height: 100px; /* forza l'altezza a combaciare */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+  background: linear-gradient(to bottom, #0373fc, #0b03fc);
+  color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.6s, transform 0.6s, opacity 0.4s;
+  overflow: hidden; /* per evitare che il testo esca fuori */
+}
+
+
+.region-box:hover {
+  background-color: #004c99;
+  transform: scale(1.12);
+}
+
+/* ❌ Stato scoperto */
+.region-box.opened {
+  background-color: grey;
+  color: #ccc;
+  pointer-events: none;
+  border-style: dashed;
+}
+
+/* 📤 Fade-out pacco */
+.region-box.fade-out {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 10;
+    transform: scale(0.9);
+  }
+}
+
+/* 📞 Overlay chiamata */
+.doctor-call-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* 📞 Box chiamata */
+.doctor-call-box {
+  background-color: #041633;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  border: 2px solid white;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.doctor-call-box h2 {
+  margin-bottom: 20px;
+}
+
+.doctor-call-box button {
+  background-color: gold;
+  border: none;
+  color: black;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.doctor-call-box button:hover {
+  background-color: orange;
+}
+
+/* ✅ Messaggio accettazione offerta */
+.offer-accepted-message {
+  background-color: #fff3cd;
+  border: 2px solid #ffeeba;
+  border-radius: 10px;
+  padding: 10px 15px;
+  color: #856404;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+}

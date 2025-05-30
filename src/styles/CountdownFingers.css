@@ -1,0 +1,12 @@
+.countdown-fingers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.countdown-fingers img {
+  max-height: 100%;
+  max-width: 100%;
+  transition: opacity 0.5s ease-in-out;
+}

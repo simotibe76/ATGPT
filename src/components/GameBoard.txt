@@ -1,0 +1,354 @@
+// src/components/GameBoard.jsx
+import React, { useState, useEffect } from "react";
+import { useDoctorLogic } from "../hooks/useDoctorLogic";
+import "../styles/GameBoard.css";
+import OfferOverlay from "./OfferOverlay";
+import GameEndOverlay from "./GameEndOverlay"; // Te lo metto sotto
+/**
+ * GameBoard: interfaccia di gioco principale dopo il carosello
+ * Mostra pacchi, premi e gestisce le chiamate/offerte del Dottore
+ */
+export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMapping, gameMode }) {
+  // Stati locali
+  const [localMapping, setLocalMapping] = useState(regionMapping);
+  const [openedBoxes, setOpenedBoxes] = useState([]);
+  const [fadingBoxes, setFadingBoxes] = useState([]);
+  const [isOpeningBox, setIsOpeningBox] = useState(false);
+  const [showDoctorCall, setShowDoctorCall] = useState(false);
+  const [showDoctorOffer, setShowDoctorOffer] = useState(false);
+  const [showTripleSwap, setShowTripleSwap] = useState(false);
+  const [currentOffer, setCurrentOffer] = useState(null);
+  const [offerAccepted, setOfferAccepted] = useState(false);
+  const [gameEnd, setGameEnd] = useState(false);
+  const [currentPlayerBox, setCurrentPlayerBox] = useState(assignedBoxNumber);
+  const [showOfferOverlay, setShowOfferOverlay] = useState(false);
+  const [acceptedOffer, setAcceptedOffer] = useState(null);
+  const [showEndChoice, setShowEndChoice] = useState(false);
+
+  // Hook della logica del Dottore
+  const {
+    handleDoctorResponse,
+    handleTripleAccept,
+    handleTripleReject,
+    handleTripleSwap,
+    handleRegionSelection,
+  } = useDoctorLogic({
+    gameMode,
+    localMapping,
+    currentPlayerBox,
+    openedBoxes,
+    selectedRegion,
+    setLocalMapping,
+    setCurrentPlayerBox,
+    setShowDoctorOffer,
+    setShowTripleSwap,
+    setCurrentOffer,
+    setGameEnd,
+    setOfferAccepted,
+  });
+
+  // Effetti di debug
+  useEffect(() => {
+    console.log("[DEBUG] showDoctorCall:", showDoctorCall);
+  }, [showDoctorCall]);
+  useEffect(() => {
+    console.log("[DEBUG] showDoctorOffer:", showDoctorOffer, "| currentOffer:", currentOffer);
+  }, [showDoctorOffer, currentOffer]);
+  useEffect(() => {
+    console.log("[DEBUG] showTripleSwap:", showTripleSwap);
+  }, [showTripleSwap]);
+
+  // Icona della modalità
+  const getGameModeIcon = (mode) => (mode === "random" ? "🎲" : "🤖");
+
+  // Calcola il valore del pacco del giocatore
+  const playerBoxValue = localMapping.find((r) => r.number === currentPlayerBox)?.prize || 0;
+
+  // Apertura pacco
+  const handleOpenBox = (region) => {
+    if (isOpeningBox || openedBoxes.includes(region.number) || showDoctorCall || gameEnd) return;
+    setIsOpeningBox(true);
+    const newOpened = [...openedBoxes, region.number];
+    setOpenedBoxes(newOpened);
+    console.log("📦 Pacco aperto:", region.number);
+    // Effetto fade-out
+    setTimeout(() => {
+      setFadingBoxes((prev) => [...prev, region.number]);
+      setIsOpeningBox(false);
+    }, 800);
+    // Evento Dottore
+    if (!offerAccepted && (newOpened.length === 6 || ((newOpened.length - 6) % 3 === 0 && newOpened.length > 6))) {
+      console.log("📞 Il Dottore sta chiamando");
+      setShowDoctorCall(true);
+    }
+    // Fine gioco se è l'ultimo pacco
+    if (!offerAccepted && newOpened.length === localMapping.length - 1) {
+      setTimeout(() => setGameEnd(true), 1000);
+    }
+  };
+
+  return (
+    <div className="gameboard-container">
+      <header>
+        <h1>🎲 Affari Tuoi - {selectedRegion} Edition {getGameModeIcon(gameMode)}</h1>
+        <h2>Il tuo pacco: N° {currentPlayerBox}</h2>
+      </header>
+
+      {offerAccepted && currentOffer && !gameEnd && (
+        <section className="offer-accepted">
+          <p>Gioco terminato! Hai accettato: {currentOffer.monetaryOffer}€</p>
+        </section>
+      )}
+
+      <div className="page-layout">
+        <aside className="prizes low-values">
+          <h3>💙 Premi bassi</h3>
+          <ul>
+            {localMapping.filter(r => r.prize < 5000 && !openedBoxes.includes(r.number))
+              .sort((a,b) => a.prize - b.prize).slice(0,10)
+              .map(r => <li key={r.number}>{r.prize}€</li>)}
+          </ul>
+        </aside>
+
+        <main className="region-grid">
+          {localMapping.filter(r => r.number !== currentPlayerBox && !fadingBoxes.includes(r.number)).map(region => (
+            <div
+              key={region.number}
+              className={`region-box ${openedBoxes.includes(region.number) ? 'opened fade-out' : ''}`}
+              onClick={() => handleOpenBox(region)}
+            >
+              {!openedBoxes.includes(region.number) ? (
+                <><p>{region.name}</p><p>N° {region.number}</p></>
+              ) : (
+                <p className="prize-value">💰 {region.prize}€</p>
+              )}
+            </div>
+          ))}
+        </main>
+
+        <aside className="prizes high-values">
+          <h3>❤️ Premi alti</h3>
+          <ul>
+            {localMapping.filter(r => r.prize >= 5000 && !openedBoxes.includes(r.number))
+              .sort((a,b) => a.prize - b.prize).slice(0,10)
+              .map(r => <li key={r.number}>{r.prize}€</li>)}
+          </ul>
+        </aside>
+      </div>
+
+      {/* Overlay: chiamata del Dottore */}
+      {showDoctorCall && !showDoctorOffer && !gameEnd && (
+        <div className="doctor-call-overlay">
+          <div className="doctor-call-box">
+            <h2>📞 Il Dottore ti sta chiamando!</h2>
+            <button onClick={() => handleDoctorResponse(true)}>Accetta</button>
+            <button onClick={() => handleDoctorResponse(false)}>Rifiuta</button>
+          </div>
+        </div>
+      )}
+
+      {/* Overlay: offerta del Dottore */}
+      {showDoctorOffer && !gameEnd && currentOffer && (
+        <div className="doctor-offer-overlay">import React, { useEffect, useState } from "react";
+import { useGameContext } from "../context/GameContext";
+import Box from "./Box";
+import "../styles/styles.css";
+
+const GameBoard = () => {
+  const {
+    playerRegion,
+    playerBox,
+    boxes,
+    revealBox,
+    currentOffer,
+    gamePhase,
+    setGamePhase,
+  } = useGameContext();
+
+  const [offerAccepted, setOfferAccepted] = useState(false);
+  const [showEndOptions, setShowEndOptions] = useState(false);
+  const [simulationInProgress, setSimulationInProgress] = useState(false);
+  const [revealedPlayerBox, setRevealedPlayerBox] = useState(false);
+
+  const handleBoxClick = (box) => {
+    if (
+      !offerAccepted &&
+      gamePhase === "playing" &&
+      !box.opened &&
+      box.number !== playerBox.number
+    ) {
+      revealBox(box.number);
+    }
+  };
+
+  const handleAcceptOffer = () => {
+    setOfferAccepted(true);
+    setShowEndOptions(true);
+    setGamePhase("ended");
+  };
+
+  const handleRevealPlayerBox = () => {
+    setShowEndOptions(false);
+    setRevealedPlayerBox(true);
+  };
+
+  const handleSimulateEnd = () => {
+    setShowEndOptions(false);
+    setSimulationInProgress(true);
+
+    const remainingBoxes = boxes
+      .filter((box) => !box.opened && box.number !== playerBox.number);
+
+    remainingBoxes.forEach((box, index) => {
+      setTimeout(() => {
+        revealBox(box.number);
+        if (index === remainingBoxes.length - 1) {
+          setSimulationInProgress(false);
+          setRevealedPlayerBox(true);
+        }
+      }, 1000 * index);
+    });
+  };
+
+  const formatCurrency = (value) =>
+    value.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
+
+  const blueValues = [1, 2, 5, 10, 25, 50, 75, 100, 250, 500];
+
+  return (
+    <div className="game-board">
+      <div className="player-info">
+        <h2>Giocatore: {playerRegion} (Pacco #{playerBox.number})</h2>
+        {offerAccepted && <p>Hai accettato: {formatCurrency(currentOffer)}</p>}
+      </div>
+
+      <div className="columns">
+        <div className="left-column">
+          {boxes
+            .filter((box) => blueValues.includes(box.value))
+            .sort((a, b) => a.value - b.value)
+            .map((box) => (
+              <div
+                key={box.value}
+                className={`prize-box ${
+                  box.opened ? "eliminated" : "blue"
+                }`}
+              >
+                {formatCurrency(box.value)}
+              </div>
+            ))}
+        </div>
+
+        <div className="boxes-container">
+          {boxes
+            .filter((box) => box.number !== playerBox.number)
+            .map((box) => (
+              <Box
+                key={box.number}
+                number={box.number}
+                region={box.region}
+                opened={box.opened}
+                value={box.value}
+                onClick={() => handleBoxClick(box)}
+              />
+            ))}
+        </div>
+
+        <div className="right-column">
+          {boxes
+            .filter((box) => !blueValues.includes(box.value))
+            .sort((a, b) => a.value - b.value)
+            .map((box) => (
+              <div
+                key={box.value}
+                className={`prize-box ${
+                  box.opened ? "eliminated" : "red"
+                }`}
+              >
+                {formatCurrency(box.value)}
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {!offerAccepted && gamePhase === "offer" && (
+        <div className="offer-section">
+          <p>Il Dottore offre: {formatCurrency(currentOffer)}</p>
+          <button onClick={handleAcceptOffer}>Accetta</button>
+        </div>
+      )}
+
+      {showEndOptions && (
+        <div className="overlay">
+          <div className="overlay-content">
+            <h2>Hai accettato {formatCurrency(currentOffer)}!</h2>
+            <p>Vuoi scoprire il contenuto del tuo pacco o simulare la fine?</p>
+            <button onClick={handleRevealPlayerBox}>Scopri il tuo pacco</button>
+            <button onClick={handleSimulateEnd}>Simula fino alla fine</button>
+          </div>
+        </div>
+      )}
+
+      {revealedPlayerBox && (
+        <div className="player-box-reveal">
+          <h3>Nel tuo pacco c’era:</h3>
+          <p>{formatCurrency(playerBox.value)}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default GameBoard;
+
+          <div className="doctor-offer-box">
+            <h2>💰 Offerta del Dottore</h2>
+            <p>{currentOffer.message}</p>
+            {/* Pulsanti dinamici da hook */}
+            {currentOffer.type === 'Tipo3' && (
+              <div className="triple-options">
+                <button onClick={handleTripleAccept}>Accetta {currentOffer.monetaryOffer}€</button>
+                <button onClick={handleTripleSwap}>Cambia Pacco</button>
+                <button onClick={handleTripleReject}>Rifiuta e Continua</button>
+              </div>
+            )}
+            {currentOffer.type === 'Tipo1' && (
+              <div className="single-option">
+                <button onClick={handleTripleAccept}>Accetta e Termina</button>
+                <button onClick={() => setShowDoctorOffer(false)}>Rifiuta</button>
+              </div>
+            )}
+            {/* Altri tipi gestiti internamente dall'hook */}
+          </div>
+        </div>
+      )}
+
+      {/* Overlay: swap pacco */}
+      {showTripleSwap && (
+        <div className="doctor-offer-overlay">
+          <div className="doctor-offer-box">
+            <h2>🔄 Cambio Pacco</h2>
+            <p>Scegli un nuovo pacco:</p>
+            <div className="swap-options">
+              {currentOffer.availableRegions
+                .filter(r => !openedBoxes.includes(r.number))
+                .map(r => <button key={r.number} onClick={() => handleRegionSelection(r.number)}>{r.name}</button>)}
+            </div>
+            <button onClick={() => setShowTripleSwap(false)}>Annulla</button>
+          </div>
+        </div>
+      )}
+
+      {/* Overlay: fine gioco */}
+      {gameEnd && (
+        <div className="game-end-overlay">
+          <div className="game-end-box">
+            <h2>🎉 Fine del gioco!</h2>
+            <p>Hai vinto: <strong>{playerBoxValue}€</strong></p>
+            <button onClick={() => window.location.reload()}>Rigioca</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

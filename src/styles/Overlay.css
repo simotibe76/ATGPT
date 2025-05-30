@@ -1,0 +1,22 @@
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.overlay-content {
+  background: #fff;
+  padding: 2rem; border-radius: 1rem;
+  text-align: center; max-width: 400px;
+}
+.overlay-buttons {
+  margin-top: 1.5rem;
+  display: flex; justify-content: space-between;
+}
+.overlay-buttons button {
+  padding: 0.5rem 1rem;
+  border: none; border-radius: 0.5rem;
+  cursor: pointer;
+}

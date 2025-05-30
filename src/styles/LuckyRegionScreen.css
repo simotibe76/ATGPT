@@ -1,0 +1,34 @@
+.lucky-region-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.map-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem 0;
+}
+
+.map-wrapper svg {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.hover-label {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+}
+
+path {
+  fill: #007bff;
+  transition: fill 1s ease-in-out;
+}
+
+path.freaky {
+  fill: orange !important;
+}

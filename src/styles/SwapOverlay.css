@@ -1,0 +1,50 @@
+/* src/styles/SwapOverlay.css */
+
+.swap-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.swap-box {
+  background-color: #041633;
+  border: 2px solid white;
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.swap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.swap-option {
+  background: linear-gradient(to bottom, #0373fc, #0b03fc);
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid white;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.swap-option:hover {
+  background-color: #0051b3;
+  transform: scale(1.1);
+}

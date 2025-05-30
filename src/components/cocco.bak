@@ -1,0 +1,214 @@
+/* 📌 Stile per la schermata di gioco */
+.page-layout {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 📌 Stile per i box delle regioni */
+.region-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border: 2px solid white;
+    background: rgba(0, 0, 255, 0.3);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* 📌 Effetto quando il pacco viene aperto */
+.region-box.opened {
+    background: rgba(0, 255, 0, 0.5);
+    transform: scale(1.1);
+}
+
+/* 📌 Stile per le colonne premi */
+.low-values, .high-values {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+}
+
+.prize-box {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.prize-box.blue {
+    background-color: blue;
+    color: white;
+}
+
+.prize-box.red {
+    background-color: red;
+    color: white;
+}
+/* Sfondo semi-trasparente per bloccare la schermata */
+.doctor-call-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Finestra della chiamata */
+.doctor-call-box {
+  background: #121212;
+  padding: 20px;
+  width: 360px;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.9);
+  animation: fadeIn 0.4s ease-in-out;
+  border: 3px solid #0078d7; /* Stile Skype/WhatsApp */
+}
+
+/* Testo della chiamata */
+.doctor-call-header {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Avatar del Dottore */
+.doctor-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #0078d7;
+  padding: 5px;
+  margin-bottom: 15px;
+}
+
+/* Animazione di entrata */
+@keyframes fadeIn {
+  from { opacity: 4; transform: scale(0.9); }
+  to { opacity: 0; transform: scale(1); }
+}
+
+/* Pulsanti chiamata */
+.call-buttons {
+  margin-top: 20px;
+}
+
+.call-buttons button {
+  font-size: 18px;
+  padding: 12px 20px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 50px;
+  width: 140px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* Pulsante Accetta (verde) */
+.call-buttons .accept {
+  background: #28a745;
+  color: white;
+}
+
+/* Pulsante Rifiuta (rosso) */
+.call-buttons .decline {
+  background: #dc3545;
+  color: white;
+}
+
+.call-buttons .accept:hover {
+  background: #218838;
+}
+
+.call-buttons .decline:hover {
+  background: #c82333;
+}
+/* Sfondo semi-trasparente per l'offerta */
+.doctor-offer-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Finestra dell'offerta */
+.doctor-offer-box {
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  padding: 25px;
+  width: 360px;
+  border-radius: 20px;
+  text-align: center;
+  color: black;
+  font-size: 18px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.4s ease-in-out;
+  border: 3px solid #0078d7;
+}
+
+/* Testo dell'offerta */
+.doctor-offer-header {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Animazione di entrata */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Pulsanti dell'offerta */
+.offer-buttons {
+  margin-top: 20px;
+}
+
+.offer-buttons button {
+  font-size: 18px;
+  padding: 12px 20px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 50px;
+  width: 140px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* Effetto sui pulsanti */
+.offer-buttons .accept {
+  background: #28a745;
+  color: white;
+}
+
+.offer-buttons .decline {
+  background: #dc3545;
+  color: white;
+}
+
+.offer-buttons .accept:hover {
+  background: #218838;
+}
+
+.offer-buttons .decline:hover {
+  background: #c82333;
+}
+

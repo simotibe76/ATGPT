@@ -1,0 +1,80 @@
+.carousel-wrapper {
+  text-align: center;
+  font-family: sans-serif;
+  margin-top: 2rem;
+}
+
+.carousel-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  background: radial-gradient(circle, #add8e6, #5f9ea0);
+  border-radius: 50%;
+  overflow: visible;
+}
+
+/* Cerchio che ruota i pacchi */
+.carousel-disc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  animation: spin 100s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pacchi */
+.carousel-box {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #0000ff;
+  color: white;
+  border: 2px solid #333;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: transform 0.3s;
+  z-index: 5;
+}
+
+/* Pacco selezionato */
+.carousel-box.selected {
+  animation: fly-to-region 1s ease-out forwards;
+  background-color: #ffcc00;
+  box-shadow: 0 0 20px 5px #ffcc00;
+  z-index: 20;
+}
+
+/* Effetto volo sopra */
+@keyframes fly-to-region {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -50%) scale(2); top: 50%; left: 50%; }
+}
+
+/* Box regioni (esterni) */
+.region-label {
+  position: absolute;
+  width: 100px;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.3rem;
+  background: #ffffffaa;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.region-label.player {
+  background-color: #ffcc00;
+  color: #000;
+  font-weight: bold;
+}

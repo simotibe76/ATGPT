@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=NPM
+Comment=
+Exec=npm run dev
+Icon=google-webdesigner
+Path=/home/simint/affari-tuoi-web
+Terminal=true
+StartupNotify=true

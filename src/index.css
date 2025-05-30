@@ -1,0 +1,28 @@
+/* Per adattare l'SVG al contenitore */
+svg {
+  width: 90vw;
+  height: auto;
+  max-width: 700px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Optional: quando selezioni una regione, puoi colorarla */
+.region-selected {
+  fill: yellow !important;
+  stroke: black !important;
+  stroke-width: 2;
+}
+
+/* Tooltip per mostrare il nome regione su hover (se vuoi) */
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 1000;
+}
+

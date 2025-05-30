@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Xed
+Comment=Xed
+Exec=sudo xed
+Icon=accessories-text-editor
+Path=/home/simint/affari-tuoi-web
+Terminal=true
+StartupNotify=true

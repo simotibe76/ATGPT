@@ -1,0 +1,50 @@
+.game-end-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.game-end-box {
+  background: #fff;
+  color: #222;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.big-amount {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.end-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.end-buttons button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #041633;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.end-buttons button:hover {
+  background-color: #003399;
+}
+
