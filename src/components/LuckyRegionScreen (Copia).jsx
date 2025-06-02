@@ -9,8 +9,30 @@ const regionList = [
   "Molise", "Piemonte", "Puglia", "Sardegna", "Sicilia", "Toscana",
   "Trentino-Alto Adige", "Umbria", "Valle d'Aosta", "Veneto"
 ];
+const regionIdMap = {
+  "Abruzzo": "IT-65",
+  "Basilicata": "IT-77",
+  "Calabria": "IT-78",
+  "Campania": "IT-72",
+  "Emilia-Romagna": "IT-45",
+  "Friuli Venezia Giulia": "IT-36",
+  "Lazio": "IT-62",
+  "Liguria": "IT-42",
+  "Lombardia": "IT-25",
+  "Marche": "IT-57",
+  "Molise": "IT-67",
+  "Piemonte": "IT-21",
+  "Puglia": "IT-75",
+  "Sardegna": "IT-88",
+  "Sicilia": "IT-82",
+  "Toscana": "IT-52",
+  "Trentino-Alto Adige": "IT-32",
+  "Umbria": "IT-55",
+  "Valle d'Aosta": "IT-23",
+  "Veneto": "IT-34"
+};
 
-export default function LuckyRegionScreen() {
+export default function LuckyRegionScreen({ onRegionSelect }) {
   const [hoveredRegion, setHoveredRegion] = useState(null);
   const [playerChoice, setPlayerChoice] = useState(null);
   const [firstFail, setFirstFail] = useState(false);
@@ -29,44 +51,42 @@ export default function LuckyRegionScreen() {
     if (!winnerRef.current) {
       const randomRegion = regionList[Math.floor(Math.random() * regionList.length)];
       winnerRef.current = randomRegion;
-      console.log("🎯 Regione fortunata:", randomRegion);
+      console.log("🎯 REGIONE FORTUNATA:", randomRegion);
     }
   }, []);
 
-  // Animazione freaky iniziale
   useEffect(() => {
     if (firstFail || secondTry) return;
     const interval = setInterval(() => {
-      const paths = mapRef.current?.querySelectorAll("path[title]");
+      if (!mapRef.current) return;
+      const paths = mapRef.current.querySelectorAll("path[title]");
       const idx = Math.floor(Math.random() * paths.length);
-      const target = paths?.[idx];
+      const target = paths[idx];
       if (!target) return;
       target.classList.add("freaky");
       setTimeout(() => target.classList.remove("freaky"), 2000);
-    }, 1000);
+    }, 1200);
     return () => clearInterval(interval);
   }, [firstFail, secondTry]);
 
-  // Eliminazione di 10 regioni NON vincenti per il secondo tentativo
   useEffect(() => {
     if (!secondTry || eliminatedRegions.length > 0) return;
     const pool = regionList.filter(r => r !== winnerRef.current);
     const pick = [...pool].sort(() => 0.5 - Math.random()).slice(0, 10);
     pick.forEach((region, i) => {
-      setTimeout(() => setEliminatedRegions(prev => [...prev, region]), 800 * i);
+      setTimeout(() => setEliminatedRegions(prev => [...prev, region]), 1000 * i);
     });
   }, [secondTry, eliminatedRegions]);
 
-  const handleMouseOver = (e) => {
+  const handleMouseOver = e => {
     const title = e.target.getAttribute("title");
     if (title) setHoveredRegion(title);
   };
-
   const handleMouseOut = () => setHoveredRegion(null);
 
-  const handleClick = (e) => {
+  const handleClick = e => {
     const title = e.target.getAttribute("title");
-    if (!title || eliminatedRegions.includes(title)) return;
+    if (!title) return;
 
     if (!playerChoice) {
       setPlayerChoice(title);
@@ -75,18 +95,19 @@ export default function LuckyRegionScreen() {
       } else {
         setTimeout(() => setFirstFail(true), 300);
       }
-    } else if (secondTry && !secondChoice) {
+    } else if (secondTry && !secondChoice && !eliminatedRegions.includes(title)) {
       setSecondChoice(title);
     }
   };
 
-  // Risultati finali
   if (firstFail) {
     return (
       <div className="lucky-region-retry">
         <h2>😢 Mi dispiace, non era quella!</h2>
         <p>Vuoi riprovare per 50.000€?</p>
-        <button onClick={startSecondTry}>Riprova per 50.000€</button>
+        <button onClick={startSecondTry}>
+          Riprova per 50.000€
+        </button>
       </div>
     );
   }
@@ -130,7 +151,7 @@ export default function LuckyRegionScreen() {
         <ItalySVG className="w-full h-auto cursor-pointer" />
         <style>{`
           ${eliminatedRegions
-            .map(region => `path[title="${region}"] { fill: #a8325a !important; pointer-events: none; }`)
+            .map(region => `#${region.replace(/\s/g, "")} { fill: #a8325a !important; pointer-events: none; }`)
             .join("\n")}
         `}</style>
       </div>

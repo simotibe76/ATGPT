@@ -1,3 +1,4 @@
+
 /* ✅ Container principale */
 .game-board-container {
   display: flex;
@@ -5,17 +6,33 @@
   align-items: center;
   padding: 20px;
   color: white;
+  background: radial-gradient(circle, #d0ecff, #8ac6ff);
+  min-height: 100vh;
+   padding-top: 3rem; /* o anche 5rem per più spazio */
+
 }
 
 /* 🎯 Banner pacco del giocatore */
 .player-info-banner {
-  background-color: #041633;
-  padding: 10px 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  font-size: 20px;
+  background-color: #ffffffdd; /* simile a Carousel */
+  color: #003366;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  font-size: 1.2rem;
   font-weight: bold;
-  border: 2px solid white;
+  box-shadow: 0 0 20px #0006;
+  border: 2px solid #93c5fd;
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  from {
+    text-shadow: 2px 2px #fff, 0 0 5px #00aaff;
+  }
+  to {
+    text-shadow: 2px 2px #fff, 0 0 20px #0077cc;
+  }
 }
 
 /* 💶 Colonne valori */
@@ -37,12 +54,15 @@
 }
 
 .value-box {
-  padding: 8px 12px;
+    padding: 6px 10px;
+  width: 90px; /* 👈 più compatto */
+  font-size: 0.95rem;
+
   border-radius: 6px;
   font-weight: bold;
   color: white;
   text-align: center;
-  width: 120px;
+ 
   transition: opacity 0.6s ease, transform 0.4s ease;
 }
 
@@ -120,7 +140,7 @@
     transform: scale(1);
   }
   100% {
-    opacity: 10;
+    opacity: 0;
     transform: scale(0.9);
   }
 }
@@ -137,6 +157,23 @@
   justify-content: center;
   align-items: center;
   z-index: 9999;
+}
+.reveal-box button {
+  background-color: #00cc99;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s;
+}
+
+.reveal-box button:hover {
+  background-color: #009977;
 }
 
 /* 📞 Box chiamata */

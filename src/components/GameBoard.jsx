@@ -47,7 +47,7 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
 
       // 🔥 Controllo Regione Fortunata (💙💙 o 💙+❤️≤75k)
       const blueBoxes = remainingBoxes.filter(r => r.prize < 5000);
-      const cheapRedBoxes = remainingBoxes.filter(r => r.prize >= 5000 && r.prize <= 75000);
+      const cheapRedBoxes = remainingBoxes.filter(r => r.prize >= 5000 && r.prize <= 25000);
       if ((blueBoxes.length === 2 || (blueBoxes.length === 1 && cheapRedBoxes.length === 1)) && !showOfferOverlay) {
         setCurrentOffer({ type: 'lucky-region', message: 'Vuoi tentare l’ultimo tiro o andiamo alla Regione Fortunata?' });
         setShowOfferOverlay(true);
@@ -85,6 +85,7 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
       refusedOffersCount
     );
     setCurrentOffer(offer);
+    console.log("🧠 Offerta generata dal Dottore:", offer);
     setShowOfferOverlay(true);
   };
 
@@ -96,7 +97,9 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
       setShowOfferOverlay(false);
       setShowSwapOverlay(true);
     } else {
+      console.log("✅ Offerta accettata:", currentOffer);
       setAcceptedAmount(currentOffer.amount);
+      console.log("💰 acceptedAmount settato a:", currentOffer.amount);
       setOfferAccepted(true);
       setShowOfferOverlay(false);
       setGameEnd(true);
@@ -248,11 +251,12 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
 
       {/* GameEndOverlay se non finale classico */}
       {gameEnd && offerAccepted && !showClassicFinale && (
-        <GameEndOverlay
-          onReveal={handleReveal}
-          isSimulating={isSimulating}
-          setIsSimulating={setIsSimulating}
-        />
+      <GameEndOverlay
+        amount={acceptedAmount}            // 👈 fondamentale!
+        playerBoxValue={playerBoxValue}    // 👈 anche questo
+        onReveal={handleReveal}
+        onSimulate={() => setIsSimulating(true)}
+      />
       )}
     </div>
   );

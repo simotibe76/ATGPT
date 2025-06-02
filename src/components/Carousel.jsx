@@ -3,63 +3,90 @@ import "../styles/Carousel.css";
 
 export default function Carousel({ mapping = [], onSelect }) {
   const totalBoxes = 20;
-  const radius = 200;
-  const regionRadius = 270;
+  const radius = 240;
 
   const [selectedBoxIndex, setSelectedBoxIndex] = useState(null);
   const [displayNumber, setDisplayNumber] = useState(null);
   const [usedIndices, setUsedIndices] = useState([]);
+  const [regionQueue, setRegionQueue] = useState([]);
   const [currentRegion, setCurrentRegion] = useState(null);
+  const [playerBoxIndex, setPlayerBoxIndex] = useState(null);
+  const [sequenceStarted, setSequenceStarted] = useState(false);
+  const [showSkip, setShowSkip] = useState(false); // 👈 NEW
 
   const playerRegion = mapping.find((m) => m.isPlayer)?.name;
   const regionMap = Object.fromEntries(mapping.map((m) => [m.name, m.number]));
 
-  const handleBoxClick = (i) => {
-    if (selectedBoxIndex !== null || usedIndices.includes(i)) return;
+  const handleBoxClick = (index) => {
+    if (selectedBoxIndex !== null) return;
 
-    const clickedRegion = mapping[i]?.name;
-    setSelectedBoxIndex(i);
-    setCurrentRegion(clickedRegion);
+    setPlayerBoxIndex(index);
+    setSelectedBoxIndex(index);
+    setCurrentRegion(playerRegion);
 
     setTimeout(() => {
-      setDisplayNumber(regionMap[clickedRegion]);
+      setDisplayNumber(regionMap[playerRegion]);
       setTimeout(() => {
-        setUsedIndices((prev) => [...prev, i]);
-        setSelectedBoxIndex(null);
+        setUsedIndices((prev) => [...prev, index]);
         setDisplayNumber(null);
-        // Qui poi triggeri GameBoard o la sequenza successiva
-        // onSelect();
+        setSelectedBoxIndex(null);
+        setShowSkip(true); // 👈 Mostra il pulsante dopo il primo reveal
+        startRegionSequence();
       }, 1500);
     }, 700);
   };
 
+  const startRegionSequence = () => {
+    const others = mapping.filter((m) => !m.isPlayer).map((m) => m.name);
+    setRegionQueue(others);
+    setSequenceStarted(true);
+  };
+
+  useEffect(() => {
+    if (!sequenceStarted || regionQueue.length === 0) {
+      if (sequenceStarted && regionQueue.length === 0) {
+        console.log("✅ Sequenza completata.");
+        setTimeout(() => onSelect(), 1000);
+      }
+      return;
+    }
+
+    const available = Array.from({ length: totalBoxes }, (_, i) => i).filter(
+      (i) => !usedIndices.includes(i)
+    );
+
+    if (available.length === 0) {
+      console.log("✅ Tutti i pacchi processati.");
+      setTimeout(() => onSelect(), 1000);
+      return;
+    }
+
+    const nextRegion = regionQueue[0];
+    const nextBoxIndex = available[0];
+
+    setTimeout(() => {
+      setSelectedBoxIndex(nextBoxIndex);
+      setCurrentRegion(nextRegion);
+
+      setTimeout(() => {
+        setDisplayNumber(regionMap[nextRegion]);
+
+        setTimeout(() => {
+          setUsedIndices((prev) => [...prev, nextBoxIndex]);
+          setDisplayNumber(null);
+          setSelectedBoxIndex(null);
+          setRegionQueue((prev) => prev.slice(1));
+        }, 500);
+      }, 500);
+    }, 500);
+  }, [sequenceStarted, regionQueue, usedIndices]);
+
   return (
     <div className="carousel-wrapper">
-      <h1>Scegli un pacco</h1>
+      <h1 className="carousel-title">Scegli un pacco</h1>
+
       <div className="carousel-container">
-        {/* BOX REGIONI disposte in cerchio */}
-        {mapping.map((region, i) => {
-          const angle = (360 / totalBoxes) * i;
-          const angleRad = (angle * Math.PI) / 180;
-          const x = regionRadius * Math.cos(angleRad);
-          const y = regionRadius * Math.sin(angleRad);
-
-          return (
-            <div
-              key={`label-${i}`}
-              className={`region-label ${region.isPlayer ? "player" : ""}`}
-              style={{
-                left: `calc(50% + ${x}px)`,
-                top: `calc(50% + ${y}px)`,
-              }}
-            >
-              {region.name}
-            </div>
-          );
-        })}
-
-        {/* DISC che ruota i pacchi */}
-        <div className="carousel-disc">
+        <div className={`carousel-disc`}>
           {Array.from({ length: totalBoxes }).map((_, i) => {
             if (usedIndices.includes(i)) return null;
 
@@ -76,7 +103,7 @@ export default function Carousel({ mapping = [], onSelect }) {
                 style={{
                   left: `calc(50% + ${x}px)`,
                   top: `calc(50% + ${y}px)`,
-                  transform: "translate(-50%, -50%)",
+                  transform: `translate(-50%, -50%) rotate(${angleDeg}deg)`,
                 }}
                 onClick={() => handleBoxClick(i)}
               >
@@ -86,6 +113,27 @@ export default function Carousel({ mapping = [], onSelect }) {
           })}
         </div>
       </div>
+<div className="region-display">
+  {currentRegion || playerRegion || "Regione"}
+</div>
+      {/* Pulsante SALTA */}
+      {showSkip && (
+        <button
+          onClick={onSelect}
+          style={{
+            marginTop: "2rem",
+            padding: "1rem 2rem",
+            fontSize: "1.2rem",
+            backgroundColor: "#ffcc00",
+            border: "none",
+            borderRadius: "10px",
+            boxShadow: "0 0 10px #ff0",
+            cursor: "pointer"
+          }}
+        >
+          SALTA 🎬
+        </button>
+      )}
     </div>
   );
 }

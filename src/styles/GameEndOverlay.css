@@ -10,41 +10,71 @@
 }
 
 .game-end-box {
-  background: #fff;
-  color: #222;
-  padding: 30px;
-  border-radius: 12px;
+  background: linear-gradient(to bottom, #fefefe, #e0e7ff);
+  color: #111827;
+  padding: 40px;
+  border-radius: 16px;
   text-align: center;
-  max-width: 500px;
+  max-width: 520px;
   width: 90%;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+  border: 3px solid gold;
 }
 
-.big-amount {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 15px 0;
+.accepted-amount {
+  font-size: 30px;
+  font-weight: 900;
+  color: #d97706;
+  margin: 15px 0 25px;
+  text-shadow: 1px 1px 0 #fff;
 }
 
-.end-buttons {
+.end-options {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 15px;
 }
 
-.end-buttons button {
-  padding: 10px;
+.end-options button {
+  padding: 12px 20px;
   font-size: 16px;
-  border: none;
-  background-color: #041633;
+  font-weight: bold;
+  background-color: #10b981;
   color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.end-options button:hover {
+  background-color: #059669;
+}
+
+.reveal-result {
+  margin-top: 25px;
+}
+
+.box-reveal-amount {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ef4444;
+}
+
+.reveal-result button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 
-.end-buttons button:hover {
-  background-color: #003399;
+.reveal-result button:hover {
+  background-color: #1d4ed8;
 }
-
