@@ -4,9 +4,11 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 2rem 1rem;
   background: radial-gradient(circle, #d0ecff, #8ac6ff);
   text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .start-title {
@@ -36,15 +38,42 @@
 
 .map-wrapper {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
+.map-wrapper svg {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+/* 🎯 Regioni standard */
 path {
   fill: #007bff;
   transition: fill 1s ease-in-out;
 }
 
+/* 🎯 Regione "magica" evidenziata */
 path.freaky {
   fill: orange !important;
+}
+
+/* 📱 Mobile optimization */
+@media (max-width: 480px) {
+  .start-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+    line-height: 1.2;
+  }
+
+  .hover-label {
+    font-size: 1rem;
+  }
+
+  .map-wrapper {
+    max-width: 90vw;
+  }
 }

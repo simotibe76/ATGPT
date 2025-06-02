@@ -1,28 +1,16 @@
 .carousel-wrapper {
-  font-family: var(--font-family, 'Segoe UI', sans-serif);
- 
-  background: radial-gradient(circle, #d0ecff, #8ac6ff); /* match StartScreen */
-  min-height: 100vh;
   text-align: center;
-}
-.carousel-title {
-  font-size: 2.8rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: #003366;
-  text-shadow: 2px 2px #ffffff, 0 0 5px #00aaff;
-  animation: glow 1.5s ease-in-out infinite alternate;
-}
-@keyframes glow {
-  from {
-    text-shadow: 2px 2px #fff, 0 0 5px #00aaff;
-  }
-  to {
-    text-shadow: 2px 2px #fff, 0 0 20px #0077cc;
-  }
+  font-family: sans-serif;
+  padding: 2rem 1rem;
+  background: radial-gradient(circle, #d0ecff, #8ac6ff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
-h1 {
+.carousel-title {
   font-size: 2rem;
   margin-bottom: 1rem;
   color: #002244;
@@ -30,13 +18,13 @@ h1 {
 
 .carousel-container {
   position: relative;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: 500px;
-  margin: 0 auto;
   background: radial-gradient(circle, #add8e6, #5f9ea0);
   border-radius: 50%;
   overflow: visible;
-    z-index: 1;
+  z-index: 1;
 }
 
 .carousel-disc {
@@ -71,6 +59,7 @@ h1 {
   font-weight: bold;
   cursor: pointer;
   z-index: 5;
+  transition: transform 0.3s;
 }
 
 .carousel-box.selected {
@@ -79,6 +68,7 @@ h1 {
   background-color: #ffcc00;
   box-shadow: 0 0 20px 5px #ffcc00;
 }
+
 @keyframes showAndFly {
   0% {
     transform: translate(-50%, -50%) scale(1);
@@ -100,42 +90,39 @@ h1 {
   }
 }
 
-@keyframes fly-to-center {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  100% {
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(2);
-    z-index: 999;
-  }fill-opacity: ;
-}
-
-@keyframes glowReveal {
-  0% {
-    box-shadow: 0 0 0px #fff;
-  }
-  50% {
-    box-shadow: 0 0 20px 10px #ffcc00;
-  }
-  100% {
-    box-shadow: 0 0 0px #fff;
-  }
-}
-
-
 .region-display {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #ffffffdd;
- z-index: 10; /* 🥇 DEVE essere sopra al carosello */
+  z-index: 10;
   pointer-events: auto;
   padding: 1rem 2rem;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: bold;
   border-radius: 15px;
   box-shadow: 0 0 20px #0006;
+}
+
+@media (max-width: 600px) {
+  .carousel-container {
+    max-width: 350px;
+    height: 350px;
+  }
+
+  .carousel-box {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  .region-display {
+    font-size: 1.1rem;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .carousel-title {
+    font-size: 1.5rem;
+  }
 }

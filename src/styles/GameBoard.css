@@ -1,4 +1,3 @@
-
 /* ✅ Container principale */
 .game-board-container {
   display: flex;
@@ -8,13 +7,12 @@
   color: white;
   background: radial-gradient(circle, #d0ecff, #8ac6ff);
   min-height: 100vh;
-   padding-top: 3rem; /* o anche 5rem per più spazio */
-
+  padding-top: 3rem;
 }
 
 /* 🎯 Banner pacco del giocatore */
 .player-info-banner {
-  background-color: #ffffffdd; /* simile a Carousel */
+  background-color: #ffffffdd;
   color: #003366;
   padding: 1rem 2rem;
   border-radius: 15px;
@@ -54,15 +52,13 @@
 }
 
 .value-box {
-    padding: 6px 10px;
-  width: 90px; /* 👈 più compatto */
+  padding: 6px 10px;
+  width: 90px;
   font-size: 0.95rem;
-
   border-radius: 6px;
   font-weight: bold;
   color: white;
   text-align: center;
- 
   transition: opacity 0.6s ease, transform 0.4s ease;
 }
 
@@ -78,7 +74,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* 🗑️ Premio eliminato */
 .value-box.eliminated {
   opacity: 0;
   transform: scale(0.8);
@@ -97,8 +92,8 @@
 
 /* 🟦 Box pacco regione */
 .region-box {
-  width: 100px; /* imposta la larghezza fissa */
-  height: 100px; /* forza l'altezza a combaciare */
+  width: 100px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -112,16 +107,14 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.6s, transform 0.6s, opacity 0.4s;
-  overflow: hidden; /* per evitare che il testo esca fuori */
+  overflow: hidden;
 }
-
 
 .region-box:hover {
   background-color: #004c99;
   transform: scale(1.12);
 }
 
-/* ❌ Stato scoperto */
 .region-box.opened {
   background-color: grey;
   color: #ccc;
@@ -129,20 +122,13 @@
   border-style: dashed;
 }
 
-/* 📤 Fade-out pacco */
 .region-box.fade-out {
   animation: fadeOut 1s forwards;
 }
 
 @keyframes fadeOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.9); }
 }
 
 /* 📞 Overlay chiamata */
@@ -158,6 +144,7 @@
   align-items: center;
   z-index: 9999;
 }
+
 .reveal-box button {
   background-color: #00cc99;
   color: white;
@@ -171,12 +158,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s;
 }
-
 .reveal-box button:hover {
   background-color: #009977;
 }
 
-/* 📞 Box chiamata */
 .doctor-call-box {
   background-color: #041633;
   padding: 30px;
@@ -188,11 +173,9 @@
   max-width: 90%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
-
 .doctor-call-box h2 {
   margin-bottom: 20px;
 }
-
 .doctor-call-box button {
   background-color: gold;
   border: none;
@@ -204,12 +187,10 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
-
 .doctor-call-box button:hover {
   background-color: orange;
 }
 
-/* ✅ Messaggio accettazione offerta */
 .offer-accepted-message {
   background-color: #fff3cd;
   border: 2px solid #ffeeba;
@@ -219,4 +200,76 @@
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 20px;
+}
+
+/* 🎯 MOBILE OPTIMIZATION 👇 */
+@media (max-width: 650px) {
+  .player-info-banner {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .value-columns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .value-column {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .value-box {
+    width: 70px;
+    padding: 4px 6px;
+    font-size: 0.8rem;
+  }
+
+  .remaining-boxes-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .region-box {
+    width: 50px;
+    height:50px;
+    font-size: 0.7rem;
+    padding: 4px;
+  }
+
+  .region-box .prize-value {
+    font-size: 0.9rem;
+  }
+
+  .doctor-call-box,
+  .reveal-box,
+  .offer-accepted-message,
+  .game-end-box {
+    width: 90vw;
+    max-width: 100%;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .doctor-call-box h2,
+  .reveal-box h2 {
+    font-size: 1.2rem;
+  }
+
+  .dialog-buttons button,
+  .reveal-box button,
+  .game-end-box button {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .offer-accepted-message {
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+  }
 }

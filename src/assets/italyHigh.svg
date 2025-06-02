@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- (c) ammap.com | SVG map of Italy - High -->
-<svg width="800" height="1000" xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+<svg viewBox="0 0 650 850"
+	preserveAspectRatio="xMidYMid meet"
+	xmlns="http://www.w3.org/2000/svg"
+	 xmlns:amcharts="http://amcharts.com/ammap" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
 	<defs>
 		<style type="text/css">
 			.land

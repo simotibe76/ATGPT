@@ -3,7 +3,8 @@ import "../styles/Carousel.css";
 
 export default function Carousel({ mapping = [], onSelect }) {
   const totalBoxes = 20;
-  const radius = 240;
+
+  const [radius, setRadius] = useState(window.innerWidth < 600 ? 150 : 200);
 
   const [selectedBoxIndex, setSelectedBoxIndex] = useState(null);
   const [displayNumber, setDisplayNumber] = useState(null);
@@ -41,6 +42,15 @@ export default function Carousel({ mapping = [], onSelect }) {
     setRegionQueue(others);
     setSequenceStarted(true);
   };
+useEffect(() => {
+  const handleResize = () => {
+    const newRadius = window.innerWidth < 600 ? 150 : 200;
+    setRadius(newRadius);
+  };
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   useEffect(() => {
     if (!sequenceStarted || regionQueue.length === 0) {
@@ -86,6 +96,9 @@ export default function Carousel({ mapping = [], onSelect }) {
       <h1 className="carousel-title">Scegli un pacco</h1>
 
       <div className="carousel-container">
+        <div className="region-display">
+          {currentRegion || playerRegion || "Regione"}
+        </div>
         <div className={`carousel-disc`}>
           {Array.from({ length: totalBoxes }).map((_, i) => {
             if (usedIndices.includes(i)) return null;
@@ -113,9 +126,7 @@ export default function Carousel({ mapping = [], onSelect }) {
           })}
         </div>
       </div>
-<div className="region-display">
-  {currentRegion || playerRegion || "Regione"}
-</div>
+
       {/* Pulsante SALTA */}
       {showSkip && (
         <button

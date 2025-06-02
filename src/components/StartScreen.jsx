@@ -67,10 +67,8 @@ export default function StartScreen({ onMappingGenerated }) {
   return (
     <div className="start-screen">
       <h1 className="start-title">🧭 Seleziona la tua Regione per iniziare!</h1>
-
-      <div className="hover-label">
-        {hoveredRegion || 'Passa sopra una regione...'}
-      </div>
+      <p className="hover-label">Tocca una regione...</p>
+ 
 
       <div
         className="map-wrapper"

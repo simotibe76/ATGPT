@@ -45,9 +45,9 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
       const unopenedCount = localMapping.length - newOpenedCount;
       const remainingBoxes = localMapping.filter(r => !newOpened.includes(r.number));
 
-      // 🔥 Controllo Regione Fortunata (💙💙 o 💙+❤️≤75k)
+      // 🔥 Controllo Regione Fortunata (💙💙 o 💙+❤️≤25k)
       const blueBoxes = remainingBoxes.filter(r => r.prize < 5000);
-      const cheapRedBoxes = remainingBoxes.filter(r => r.prize >= 5000 && r.prize <= 25000);
+      const cheapRedBoxes = remainingBoxes.filter(r => r.prize >= 10000 && r.prize <= 25000);
       if ((blueBoxes.length === 2 || (blueBoxes.length === 1 && cheapRedBoxes.length === 1)) && !showOfferOverlay) {
         setCurrentOffer({ type: 'lucky-region', message: 'Vuoi tentare l’ultimo tiro o andiamo alla Regione Fortunata?' });
         setShowOfferOverlay(true);
