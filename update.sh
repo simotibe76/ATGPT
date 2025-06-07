@@ -14,3 +14,4 @@ git commit -m "⚡️ Aggiornamento automatico via script"
 
 echo "📤 Push su GitHub..."
 git push origin main
+read -p "Premi INVIO per chiudere..."
