@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "../styles/GameBoard.css";
 import OfferOverlay from "./OfferOverlay";
+import OfferRevealOverlay from "./OfferRevealOverlay";
 import GameEndOverlay from "./GameEndOverlay";
 import FinalClassicScreen from "./FinalClassicScreen";
 import LuckyRegionScreen from "./LuckyRegionScreen";
@@ -229,14 +230,23 @@ if (
         </div>
       )}
 
-      {showOfferOverlay && currentOffer && !gameEnd && (
-        <OfferOverlay
-          offer={currentOffer}
-          onAccept={handleAcceptOffer}
-          onRefuse={handleRefuseOffer}
-          isSimulating={isSimulating}
-        />
-      )}
+{showOfferOverlay && currentOffer && !gameEnd && (
+  currentOffer.type === "money" ? (
+    <OfferRevealOverlay
+      amount={currentOffer.amount}
+      onAccept={handleAcceptOffer}
+      onRefuse={handleRefuseOffer}
+    />
+  ) : (
+    <OfferOverlay
+      offer={currentOffer}
+      onAccept={handleAcceptOffer}
+      onRefuse={handleRefuseOffer}
+      isSimulating={isSimulating}
+    />
+  )
+)}
+
 
       {showSwapOverlay && (
         <SwapOverlay

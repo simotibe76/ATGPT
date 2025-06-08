@@ -1,0 +1,71 @@
+/* src/styles/OfferRevealOverlay.css */
+.offer-reveal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.offer-box {
+  background-color: white;
+  color: #222;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 20px black;
+}
+
+.digit-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.digit-box {
+  width: 40px;
+  height: 60px;
+  background: #f7f7f7;
+  border: 2px solid #333;
+  border-radius: 8px;
+  font-size: 2rem;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.offer-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.offer-buttons button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #041633;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.offer-buttons button:hover {
+  background-color: #0077cc;
+}
+.digit-box {
+  font-family: 'Permanent Marker', cursive;
+}
+
