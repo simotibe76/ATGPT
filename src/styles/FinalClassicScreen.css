@@ -1,59 +1,114 @@
 .final-classic-container {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
-  min-height: 60vh;
-  padding: 2rem;
-  background-color: #001f3f;
-  color: white;
+  padding: 1.5rem 1rem;
+  min-height: 100vh;
+  background: radial-gradient(circle, #d0ecff, #8ac6ff);
+  color: #003366;
+  gap: 1.2rem;
   text-align: center;
 }
 
 .final-box {
-  flex: 1;
-  padding: 1rem;
-  border: 2px solid #ccc;
+  background-color: #ffffffcc;
+  padding: 0.8rem;
   border-radius: 12px;
-  background-color: #004080;
-  margin: 1rem;
+  width: 100%;
+  max-width: 280px;
+  box-shadow: 0 0 10px #0005;
+  border: 2px solid #93c5fd;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .final-center {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
 }
 
 .countdown-button {
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-  background: gold;
-  color: black;
+  background-color: #ffcc00;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: bold;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ff0a;
+  transition: 0.3s;
 }
 
-.countdown-number {
-  font-size: 4rem;
-  animation: pop 0.5s ease-in-out;
+.countdown-button:hover {
+  background-color: #ffaa00;
 }
 
 .final-message {
-  font-size: 1.4rem;
-  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #ffffffee;
+  color: #003366;
+  box-shadow: 0 0 10px #0004;
+  max-width: 500px;
+  width: 90%;
 }
 
 .final-message.win {
-  color: #00ff88;
+  border: 3px solid #00cc66;
+  background-color: #e6fffa;
 }
 
 .final-message.lose {
-  color: #ff6666;
+  border: 3px solid #cc0000;
+  background-color: #ffe6e6;
 }
 
-@keyframes pop {
-  0% { transform: scale(0.5); opacity: 0.5; }
-  100% { transform: scale(1); opacity: 1; }
+/* Pulsanti finali */
+.final-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.final-actions button {
+  background-color: #003366;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.final-actions button:hover {
+  background-color: #0055aa;
+}
+
+@media (min-width: 768px) {
+  .final-classic-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2rem;
+  }
+
+  .final-center {
+    flex: 1;
+    padding: 0 2rem;
+  }
+
+  .final-box {
+    max-width: 250px;
+  }
+
+  .final-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
 }

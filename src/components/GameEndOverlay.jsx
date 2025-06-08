@@ -42,14 +42,31 @@ export default function GameEndOverlay({ amount, playerBoxValue, onReveal, onSim
         )}
 
         {revealDone && (
-          <div className="reveal-result">
-            <p>📦 Il tuo pacco conteneva:</p>
-            <h3 className="box-reveal-amount">
-              💰 {playerBoxValue.toLocaleString()}€
-            </h3>
-            <button onClick={handleRestart}>🔁 Rigioca</button>
-          </div>
-        )}
+  <div className="reveal-result">
+    <p>📦 Il tuo pacco conteneva:</p>
+    <h3 className="box-reveal-amount">
+      💰 {playerBoxValue.toLocaleString()}€
+    </h3>
+    <div className="end-buttons">
+      <button onClick={handleRestart}>🔁 Rigioca</button>
+      <a
+        href="https://github.com/simotibe76/ATGPT/discussions/2"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        💬 Lascia un commento su GitHub
+      </a>
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfNfUZFpQonGhTIXbCjpi7ft-Rn8gKAc1NC97Tdl3y7mjwdvw/viewform?usp=dialog"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        📝 Compila il modulo di feedback
+      </a>
+    </div>
+  </div>
+)}
+
       </div>
     </div>
   );

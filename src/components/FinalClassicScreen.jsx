@@ -49,7 +49,24 @@ export default function FinalClassicScreen({ playerBox, remainingBox, onRestart 
         {finalMessage && (
           <div className={`final-message ${finalMessage.type}`}>
             <p>{finalMessage.text}</p>
-            <button onClick={onRestart}>🔁 Rigioca</button>
+
+            <div className="final-actions">
+              <button onClick={onRestart}>🔁 Rigioca</button>
+              <button
+                onClick={() =>
+                  window.open("https://github.com/simotibe76/ATGPT/discussions/2", "_blank")
+                }
+              >
+                📝 Lascia un commento (GitHub)
+              </button>
+              <button
+                onClick={() =>
+                  window.open("https://docs.google.com/forms/d/e/1FAIpQLSfNfUZFpQonGhTIXbCjpi7ft-Rn8gKAc1NC97Tdl3y7mjwdvw/viewform?usp=dialog", "_blank")
+                }
+              >
+                ✍️ Feedback Anonimo
+              </button>
+            </div>
           </div>
         )}
       </div>

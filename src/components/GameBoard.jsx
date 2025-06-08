@@ -45,16 +45,35 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
       const unopenedCount = localMapping.length - newOpenedCount;
       const remainingBoxes = localMapping.filter(r => !newOpened.includes(r.number));
 
-      // 🔥 Controllo Regione Fortunata (💙💙 o 💙+❤️≤25k)
+      // 🔥 REGIONE FORTUNATA (REVISIONATA)
       const blueBoxes = remainingBoxes.filter(r => r.prize < 5000);
-      const cheapRedBoxes = remainingBoxes.filter(r => r.prize >= 10000 && r.prize <= 25000);
-      if ((blueBoxes.length === 2 || (blueBoxes.length === 1 && cheapRedBoxes.length === 1)) && !showOfferOverlay) {
-        setCurrentOffer({ type: 'lucky-region', message: 'Vuoi tentare l’ultimo tiro o andiamo alla Regione Fortunata?' });
+      const cheapRedBoxes = remainingBoxes.filter(r => r.prize >= 5000 && r.prize <= 75000);
+      const isLuckyCondition =
+        (blueBoxes.length === 2 || (blueBoxes.length === 1 && cheapRedBoxes.length === 1));
+
+      console.log("🧪 REGIONE FORTUNATA CHECK — Aperte:", newOpenedCount, "Blu:", blueBoxes.length, "RosseSoft:", cheapRedBoxes.length);
+
+const allPrizes = remainingBoxes.map(r => r.prize);
+const maxPrizeLeft = Math.max(...allPrizes);
+
+if (
+  newOpenedCount >= 16 && // 👉 attiva solo a 4 pacchi dalla fine
+  isLuckyCondition &&
+  maxPrizeLeft <= 20000 && // 👉 nessun premio alto rimasto
+  !showOfferOverlay &&
+  !showDoctorCall
+) {
+
+        console.log("🎯 Regione Fortunata ATTIVATA!");
+        setCurrentOffer({
+          type: 'lucky-region',
+          message: 'Vuoi tentare l’ultimo tiro o andiamo alla Regione Fortunata?'
+        });
         setShowOfferOverlay(true);
-        return; // interrompe ulteriore logica di offerte standard
+        return;
       }
 
-      // Offerta del Dottore standard
+      // 📞 Offerta standard del Dottore
       if (
         unopenedCount !== 2 &&
         (newOpenedCount === 6 || ((newOpenedCount - 6) % 3 === 0 && newOpenedCount > 6)) &&
@@ -63,7 +82,7 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
         setShowDoctorCall(true);
       }
 
-      // Finale classico
+      // 🏁 FINALE CLASSICO
       if (unopenedCount === 2) {
         setTimeout(() => setShowClassicFinale(true), 800);
       }
@@ -85,7 +104,6 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
       refusedOffersCount
     );
     setCurrentOffer(offer);
-    console.log("🧠 Offerta generata dal Dottore:", offer);
     setShowOfferOverlay(true);
   };
 
@@ -97,9 +115,7 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
       setShowOfferOverlay(false);
       setShowSwapOverlay(true);
     } else {
-      console.log("✅ Offerta accettata:", currentOffer);
       setAcceptedAmount(currentOffer.amount);
-      console.log("💰 acceptedAmount settato a:", currentOffer.amount);
       setOfferAccepted(true);
       setShowOfferOverlay(false);
       setGameEnd(true);
@@ -119,9 +135,7 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
     const updated = [...localMapping];
     const i1 = updated.findIndex(r => r.number === playerBoxNumber);
     const i2 = updated.findIndex(r => r.number === newBoxNumber);
-    // swap premi
     [updated[i1].prize, updated[i2].prize] = [updated[i2].prize, updated[i1].prize];
-    // swap numeri
     [updated[i1].number, updated[i2].number] = [newBoxNumber, playerBoxNumber];
     setPlayerBoxNumber(newBoxNumber);
     setLocalMapping(updated);
@@ -131,7 +145,7 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
     setGameEnd(false);
   };
 
-  // Se Regione Fortunata accettata, mostra subito lo screen
+  // 👉 Schermata Lucky Region
   if (showLuckyRegion) {
     return <LuckyRegionScreen />;
   }
@@ -233,7 +247,6 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
         />
       )}
 
-      {/* 🔥 FINALE CLASSICO */}
       {showClassicFinale && (() => {
         const playerBox = localMapping.find(b => b.number === playerBoxNumber);
         const remainingBox = localMapping.find(
@@ -249,14 +262,13 @@ export default function GameBoard({ selectedRegion, assignedBoxNumber, regionMap
         );
       })()}
 
-      {/* GameEndOverlay se non finale classico */}
       {gameEnd && offerAccepted && !showClassicFinale && (
-      <GameEndOverlay
-        amount={acceptedAmount}            // 👈 fondamentale!
-        playerBoxValue={playerBoxValue}    // 👈 anche questo
-        onReveal={handleReveal}
-        onSimulate={() => setIsSimulating(true)}
-      />
+        <GameEndOverlay
+          amount={acceptedAmount}
+          playerBoxValue={playerBoxValue}
+          onReveal={handleReveal}
+          onSimulate={() => setIsSimulating(true)}
+        />
       )}
     </div>
   );
